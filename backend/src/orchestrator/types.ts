@@ -9,6 +9,10 @@ export type TranscriptEntry = {
   providerId: string;
   providerName: string;
   text: string;
+  usage?: {
+    inputTokens?: number;
+    outputTokens?: number;
+  };
 };
 
 export type OrchestrateResult = {

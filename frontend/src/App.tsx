@@ -13,6 +13,10 @@ type TranscriptEntry = {
   providerId: string;
   providerName: string;
   text: string;
+  usage?: {
+    inputTokens?: number;
+    outputTokens?: number;
+  };
 };
 
 type OrchestrateResponse = {
@@ -192,7 +196,13 @@ function App() {
           <ul>
             {result.transcript.map((entry, idx) => (
               <li key={`${entry.providerId}-${entry.round}-${idx}`}>
-                [Round {entry.round}] {entry.providerName}: {entry.text}
+                <strong>[Round {entry.round}] {entry.providerName}</strong>
+                {entry.usage && (
+                  <span className="usage-stats" style={{ fontSize: "0.8em", color: "#666", marginLeft: "8px" }}>
+                    (Tokens: {entry.usage.inputTokens ?? 0} in / {entry.usage.outputTokens ?? 0} out)
+                  </span>
+                )}
+                <p style={{ marginTop: "4px", whiteSpace: "pre-wrap" }}>{entry.text}</p>
               </li>
             ))}
           </ul>

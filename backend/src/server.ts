@@ -4,6 +4,9 @@ import cors from "@fastify/cors";
 import { ModeratorOrchestrator } from "./orchestrator/moderatorOrchestrator";
 import type { OrchestrateRequest } from "./orchestrator/types";
 import { MockProvider } from "./providers/mockProvider";
+import { OpenAIProvider } from "./providers/openaiProvider";
+import { GeminiProvider } from "./providers/geminiProvider";
+import { DeepSeekProvider } from "./providers/deepseekProvider";
 import { ProviderRegistry } from "./providers/providerRegistry";
 
 dotenv.config();
@@ -18,6 +21,7 @@ void app.register(cors, {
   origin: true,
 });
 
+// Always register Mock Providers for testing
 providerRegistry.register(
   new MockProvider({
     id: "mock-openai",
@@ -33,6 +37,40 @@ providerRegistry.register(
     model: "gemini-mock-1",
   }),
 );
+
+// Register real providers if API keys are available
+if (process.env.OPENAI_API_KEY) {
+  providerRegistry.register(
+    new OpenAIProvider({
+      id: "openai",
+      name: "OpenAI",
+      model: "gpt-4o",
+      apiKey: process.env.OPENAI_API_KEY,
+    }),
+  );
+}
+
+if (process.env.GOOGLE_API_KEY) {
+  providerRegistry.register(
+    new GeminiProvider({
+      id: "gemini",
+      name: "Gemini",
+      model: "gemini-2.5-pro",
+      apiKey: process.env.GOOGLE_API_KEY,
+    }),
+  );
+}
+
+if (process.env.DEEPSEEK_API_KEY) {
+  providerRegistry.register(
+    new DeepSeekProvider({
+      id: "deepseek",
+      name: "DeepSeek",
+      model: "deepseek-chat",
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    }),
+  );
+}
 
 app.get("/healthz", async () => {
   return { ok: true };
