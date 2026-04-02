@@ -24,7 +24,7 @@ chatallin is an open-source multi-LLM collaboration platform.
 
 ## Project Status
 
-Early bootstrap stage. Core architecture and implementation are in progress.
+MVP is complete. The core architecture is functional with support for OpenAI, Gemini, and DeepSeek, including web UI and JSON export capabilities.
 
 ## Roadmap
 
@@ -33,7 +33,7 @@ Early bootstrap stage. Core architecture and implementation are in progress.
 - [x] Implement moderator orchestration flow
 - [x] Build web UI for session creation and live transcript
 - [x] Add config import/export templates
-- [ ] Publish first public release (`v0.1.0`)
+- [x] Publish first public release (`v0.1.0`)
 
 ## Quick Start
 
