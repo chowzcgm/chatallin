@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 import Fastify from "fastify";
+import { ModeratorOrchestrator } from "./orchestrator/moderatorOrchestrator";
+import type { OrchestrateRequest } from "./orchestrator/types";
 import { MockProvider } from "./providers/mockProvider";
 import { ProviderRegistry } from "./providers/providerRegistry";
 
@@ -9,6 +11,7 @@ const app = Fastify({
   logger: true,
 });
 const providerRegistry = new ProviderRegistry();
+const orchestrator = new ModeratorOrchestrator(providerRegistry);
 
 providerRegistry.register(
   new MockProvider({
@@ -56,6 +59,30 @@ app.post<{ Params: { id: string }; Body: { prompt?: string } }>(
     };
   },
 );
+
+app.post<{ Body: OrchestrateRequest }>("/orchestrate", async (request, reply) => {
+  const topic = request.body?.topic?.trim();
+  const selectedProviderIds = request.body?.selectedProviderIds ?? [];
+  const rounds = request.body?.rounds ?? 3;
+
+  if (!topic) {
+    return reply.code(400).send({ error: "topic_required" });
+  }
+  if (!Array.isArray(selectedProviderIds) || selectedProviderIds.length < 2) {
+    return reply.code(400).send({ error: "at_least_two_providers_required" });
+  }
+  if (rounds < 1 || rounds > 10) {
+    return reply.code(400).send({ error: "rounds_out_of_range" });
+  }
+
+  const result = await orchestrator.run({
+    topic,
+    selectedProviderIds,
+    rounds,
+  });
+
+  return result;
+});
 
 const port = Number(process.env.PORT ?? 3000);
 const host = process.env.HOST ?? "0.0.0.0";
