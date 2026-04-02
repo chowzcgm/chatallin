@@ -1,15 +1,50 @@
 # chatallin
 
-一个开源的多模型协作平台：让多个大模型围绕同一话题进行讨论，并输出可追溯结论。
+chatallin is an open-source multi-LLM collaboration platform.
 
-## Features (MVP)
-- 用户可自定义选择参与模型
-- 主持人模式多轮协作
-- 输出结论、分歧点、证据与建议
-- 支持 OpenAI / Gemini / DeepSeek（可扩展）
+给一个话题，让多个大模型（如 OpenAI / Gemini / DeepSeek）在同一会话中协作讨论，并生成可追溯的统一结论。
+
+## Vision
+
+- Make LLM-to-LLM collaboration simple, transparent, and reproducible
+- Let users choose which models participate in each conversation
+- Keep the system open, extensible, and community-driven
+
+## Planned MVP Features
+
+- User-defined model selection (choose which models join a session)
+- Moderator mode for multi-round collaboration
+- Structured final output:
+  - conclusion
+  - disagreements
+  - evidence
+  - next actions
+- Session replay for auditing and experiments
+- BYOK support (bring your own API keys)
+
+## Project Status
+
+Early bootstrap stage. Core architecture and implementation are in progress.
+
+## Roadmap
+
+- [ ] Build provider abstraction layer
+- [ ] Integrate OpenAI, Gemini, DeepSeek adapters
+- [ ] Implement moderator orchestration flow
+- [ ] Build web UI for session creation and live transcript
+- [ ] Add config import/export templates
+- [ ] Publish first public release (`v0.1.0`)
 
 ## Quick Start
+
 Coming soon.
 
+## Contributing
+
+Contributions are welcome.
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting issues or pull requests.
+
 ## License
-MIT
+
+MIT. See [LICENSE](LICENSE).
