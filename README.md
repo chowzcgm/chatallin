@@ -37,7 +37,19 @@ Early bootstrap stage. Core architecture and implementation are in progress.
 
 ## Quick Start
 
-Coming soon.
+### Backend (current)
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Health check:
+
+```bash
+curl http://127.0.0.1:3000/healthz
+```
 
 ## Contributing
 
