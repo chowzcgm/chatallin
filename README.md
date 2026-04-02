@@ -51,6 +51,22 @@ Health check:
 curl http://127.0.0.1:3000/healthz
 ```
 
+List providers:
+
+```bash
+curl http://127.0.0.1:3000/providers
+```
+
+### Frontend (current)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open the local Vite URL (usually `http://127.0.0.1:5173`) and run an orchestration from the UI.
+
 ## Contributing
 
 Contributions are welcome.

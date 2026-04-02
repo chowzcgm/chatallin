@@ -1,0 +1,85 @@
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.subtitle {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+}
+
+.panel {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label,
+legend {
+  font-weight: 600;
+}
+
+textarea,
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #c7c7c7;
+  border-radius: 6px;
+  font: inherit;
+}
+
+button {
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+fieldset {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-weight: 400;
+}
+
+.checkbox input {
+  width: auto;
+}
+
+.hint {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.error {
+  color: #b91c1c;
+  font-weight: 600;
+}

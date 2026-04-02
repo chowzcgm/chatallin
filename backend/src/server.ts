@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import { ModeratorOrchestrator } from "./orchestrator/moderatorOrchestrator";
 import type { OrchestrateRequest } from "./orchestrator/types";
 import { MockProvider } from "./providers/mockProvider";
@@ -12,6 +13,10 @@ const app = Fastify({
 });
 const providerRegistry = new ProviderRegistry();
 const orchestrator = new ModeratorOrchestrator(providerRegistry);
+
+void app.register(cors, {
+  origin: true,
+});
 
 providerRegistry.register(
   new MockProvider({
