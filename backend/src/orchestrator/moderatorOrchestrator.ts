@@ -73,6 +73,15 @@ export class ModeratorOrchestrator {
     let conclusion = `After ${params.rounds} rounds, the selected models discussed "${params.topic}".`;
     let disagreements = ["Models may still differ on implementation details."];
     let nextActions = ["Review transcript highlights."];
+    let totalInputTokens = 0;
+    let totalOutputTokens = 0;
+
+    for (const t of params.transcript) {
+      if (t.usage) {
+        totalInputTokens += t.usage.inputTokens ?? 0;
+        totalOutputTokens += t.usage.outputTokens ?? 0;
+      }
+    }
 
     if (moderator && params.transcript.length > 0 && !moderator.metadata().id.startsWith("mock")) {
       const fullTranscript = params.transcript
@@ -95,6 +104,12 @@ Output ONLY valid JSON without any markdown formatting or extra text.`;
 
       try {
         const result = await moderator.generate({ prompt });
+        
+        if (result.usage) {
+          totalInputTokens += result.usage.inputTokens ?? 0;
+          totalOutputTokens += result.usage.outputTokens ?? 0;
+        }
+
         let jsonStr = result.text.trim();
         // Remove markdown code blocks if present
         if (jsonStr.startsWith("\`\`\`json")) {
@@ -125,6 +140,10 @@ Output ONLY valid JSON without any markdown formatting or extra text.`;
       disagreements,
       evidence,
       nextActions,
+      usageSummary: {
+        totalInputTokens,
+        totalOutputTokens,
+      },
     };
   }
 }

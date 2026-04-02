@@ -28,6 +28,10 @@ type OrchestrateResponse = {
   disagreements: string[];
   evidence: string[];
   nextActions: string[];
+  usageSummary?: {
+    totalInputTokens: number;
+    totalOutputTokens: number;
+  };
 };
 
 const API_BASE = "http://127.0.0.1:3000";
@@ -97,11 +101,24 @@ function App() {
         throw new Error(data?.error ?? "orchestrate_failed");
       }
       setResult(data as OrchestrateResponse);
-    } catch {
-      setError("Failed to run orchestration. Check backend logs and request data.");
+    } catch (err: any) {
+      setError(err?.message || "Failed to run orchestration. Check backend logs and request data.");
     } finally {
       setRunning(false);
     }
+  };
+
+  const onExportJson = () => {
+    if (!result) return;
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `chatallin-session-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -164,7 +181,19 @@ function App() {
 
       {result && (
         <section className="panel">
-          <h2>Result</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+            <h2 style={{ margin: 0 }}>Result</h2>
+            <button type="button" onClick={onExportJson} className="secondary-button">
+              Export JSON
+            </button>
+          </div>
+          
+          {result.usageSummary && (
+            <div className="usage-summary" style={{ background: "#f0fdf4", padding: "10px", borderRadius: "6px", marginBottom: "1rem" }}>
+              <strong>Total Usage:</strong> {result.usageSummary.totalInputTokens} Input Tokens / {result.usageSummary.totalOutputTokens} Output Tokens
+            </div>
+          )}
+
           <p>
             <strong>Conclusion:</strong> {result.conclusion}
           </p>

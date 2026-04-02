@@ -24,4 +24,8 @@ export type OrchestrateResult = {
   disagreements: string[];
   evidence: string[];
   nextActions: string[];
+  usageSummary?: {
+    totalInputTokens: number;
+    totalOutputTokens: number;
+  };
 };

@@ -31,8 +31,8 @@ Early bootstrap stage. Core architecture and implementation are in progress.
 - [x] Build provider abstraction layer
 - [x] Integrate OpenAI, Gemini, DeepSeek adapters
 - [x] Implement moderator orchestration flow
-- [ ] Build web UI for session creation and live transcript
-- [ ] Add config import/export templates
+- [x] Build web UI for session creation and live transcript
+- [x] Add config import/export templates
 - [ ] Publish first public release (`v0.1.0`)
 
 ## Quick Start
